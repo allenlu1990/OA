@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ## 平台简介
 
 一直想做一款后台管理系统，看了很多优秀的开源项目但是发现没有合适的。于是利用空闲休息时间开始自己写了一套后台系统。如此有了若依。她可以用于所有的Web应用程序，如网站管理后台，网站会员中心，CMS，CRM，OA。所有前端后台代码封装过后十分精简易上手，出错概率低。同时支持移动客户端访问。系统会陆续更新一些实用功能。
@@ -76,3 +77,7 @@
 ## 若依前后端分离交流群
 
 QQ群： [![加入QQ群](https://img.shields.io/badge/937441-blue.svg)](https://jq.qq.com/?_wv=1027&k=5bVB1og)  点击按钮入群。
+=======
+# OA
+This is for Nantong institute of intelligent perception.
+>>>>>>> 498e1fde00fe51a9f616cdb7f13c3405fb41f114
