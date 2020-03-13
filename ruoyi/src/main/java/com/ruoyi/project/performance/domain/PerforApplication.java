@@ -24,7 +24,7 @@ public class PerforApplication extends BaseEntity {
   private String applicationContent;
 
   /** 考核时间段 */
-  @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
+  @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
   private Date applicationDate;
 
   /** 申请状态（0正常 1关闭） */

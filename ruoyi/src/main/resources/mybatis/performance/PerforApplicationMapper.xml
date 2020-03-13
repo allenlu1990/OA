@@ -36,7 +36,7 @@
         AND p.owner_id = #{ownerId}
       </if>
       <if test="applicationDate != null ">
-        AND p.application_date = #{applicationDate}
+        <![CDATA[   AND DATE_FORMAT(p.application_date, '%Y-%m') = DATE_FORMAT(#{applicationDate}, '%Y-%m')   ]]>
       </if>
       <if test="createBy != null and createBy != ''">
         AND p.create_by like concat('%', #{createBy}, '%')

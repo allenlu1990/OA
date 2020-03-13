@@ -23,7 +23,7 @@
       </el-form-item>
 
       <el-form-item label="考核月份">
-        <el-date-picker v-model="queryParams.applicationDate" type="month" placeholder="选择月"></el-date-picker>
+        <el-date-picker value-format="yyyy-MM-dd HH:mm:ss" v-model="queryParams.applicationDate" type="month" placeholder="选择月"></el-date-picker>
       </el-form-item>
 
       <el-form-item>
@@ -116,7 +116,7 @@
           </el-col>
           <el-col :span="12">
                <el-form-item label="考核月份" prop="applicationDate">
-                  <el-date-picker v-model="form.applicationDate" type="month" placeholder="选择月"></el-date-picker>
+                  <el-date-picker value-format="yyyy-MM-dd HH:mm:ss" v-model="form.applicationDate" type="month" placeholder="选择月"></el-date-picker>
                </el-form-item>
          </el-col>
           <el-col :span="24">
