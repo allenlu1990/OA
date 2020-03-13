@@ -701,6 +701,10 @@ CREATE TABLE `performance_application` (
   `update_by` varchar(64) DEFAULT '' COMMENT '更新者',
   `update_time` datetime DEFAULT NULL COMMENT '更新时间',
   `remark` varchar(500) DEFAULT NULL COMMENT '备注',
+  `application_title` varchar(100) DEFAULT NULL COMMENT '申请标题',
+  `application_content` varchar(2000) DEFAULT NULL COMMENT '考核内容',
+  `application_date` datetime DEFAULT NULL COMMENT '考核时间点',
+  `status` char(1) DEFAULT NULL COMMENT '申请状态（0正常 1关闭）',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='绩效申请表';
 
@@ -711,6 +715,7 @@ CREATE TABLE `performance_approve_task` (
   `approver_id` int(11) DEFAULT NULL COMMENT '审批人ID',
   `owner_id` int(11) DEFAULT NULL COMMENT '所属人ID',
   `result` varchar(11) DEFAULT NULL COMMENT '评审结果',
+  `application_id` int(11) DEFAULT NULL COMMENT '申请ID',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='绩效审批表';
 
@@ -720,6 +725,7 @@ CREATE TABLE `performance_result_task` (
   `owner_id` int(11) DEFAULT NULL COMMENT '所属人ID',
   `date` timestamp NULL DEFAULT NULL COMMENT '所属时间点',
   `result` varchar(11) DEFAULT NULL COMMENT '评审结果',
+  `application_id` int(11) DEFAULT NULL COMMENT '申请ID',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='绩效评审结果表';
 
