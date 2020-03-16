@@ -26,3 +26,12 @@ export function updateEvaluate(data) {
   })
 }
 
+// 获取被评人员
+export function listTaskOwners(query) {
+  return request({
+    url: '/performance/evaluate/task/owners',
+    method: 'get',
+    params: query
+  })
+}
+

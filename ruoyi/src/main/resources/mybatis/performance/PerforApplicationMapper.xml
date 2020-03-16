@@ -41,6 +41,9 @@
       <if test="createBy != null and createBy != ''">
         AND p.create_by like concat('%', #{createBy}, '%')
       </if>
+      <if test="applicationTitle != null and applicationTitle != ''">
+        AND p.application_title like concat('%', #{applicationTitle}, '%')
+      </if>
     </where>
   </select>
 

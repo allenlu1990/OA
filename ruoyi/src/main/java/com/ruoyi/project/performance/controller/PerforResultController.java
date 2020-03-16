@@ -2,6 +2,7 @@ package com.ruoyi.project.performance.controller;
 
 import java.util.List;
 
+import com.ruoyi.common.utils.SecurityUtils;
 import com.ruoyi.framework.web.controller.BaseController;
 import com.ruoyi.framework.web.page.TableDataInfo;
 import com.ruoyi.project.performance.domain.PerforResult;
@@ -25,7 +26,19 @@ public class PerforResultController extends BaseController {
   @GetMapping("/list")
   public TableDataInfo list(PerforResult result) {
     startPage();
-    List<PerforResult> list = resultService.selectResultList(result);
-    return getDataTable(list);
+    /**
+     *
+     * 自己只能看到自己的结果 除了 考核系统管理员可以看到全部人的
+     *
+     * **/
+    if(result.getOwnerId() == null){
+      result.setOwnerId(SecurityUtils.getLoginUser().getUser().getUserId());
+      SecurityUtils.getLoginUser().getUser().getRoles().forEach(role->{
+        if(role.getRoleId() == 100 || role.getRoleId() == 1){
+          result.setOwnerId(null);
+        }
+      });
+    }
+    return getDataTable(resultService.selectResultList(result));
   }
 }

@@ -10,9 +10,11 @@ import com.ruoyi.framework.web.domain.AjaxResult;
 import com.ruoyi.framework.web.page.TableDataInfo;
 import com.ruoyi.project.performance.domain.PerforApproveTask;
 import com.ruoyi.project.performance.service.IPerforEvaluateService;
+import com.ruoyi.project.system.domain.SysUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -56,11 +58,17 @@ public class PerforEvaluateController extends BaseController {
     return toAjax(approveTaskService.updatePerforApproveTask(approveTask));
   }
 
-  @PreAuthorize("@ss.hasPermi('performance:evaluate:update')")
-  @Log(title = "修改结果", businessType = BusinessType.UPDATE)
-  @PostMapping("/do")
-  public AjaxResult update(@RequestBody PerforApproveTask approveTask){
-    return toAjax(approveTaskService.updatePerforApproveTask(approveTask));
+
+  /**
+   * 获取被考核人员
+   */
+//  @PreAuthorize("@ss.hasPermi('system:dict:query')")
+  @GetMapping(value = "/task/owners")
+  public AjaxResult getTaskOwners(PerforApproveTask approveTask)
+  {
+    approveTask.setApproverId(SecurityUtils.getLoginUser().getUser().getUserId());
+    return AjaxResult.success(approveTaskService.getTaskOwners(approveTask));
   }
+
 
 }

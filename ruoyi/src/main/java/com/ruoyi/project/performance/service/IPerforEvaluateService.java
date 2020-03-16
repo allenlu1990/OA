@@ -2,7 +2,9 @@ package com.ruoyi.project.performance.service;
 
 import java.util.List;
 
+import com.ruoyi.project.performance.domain.OwnersInfo;
 import com.ruoyi.project.performance.domain.PerforApproveTask;
+import com.ruoyi.project.system.domain.SysUser;
 
 /**
  * 绩效审批Service接口
@@ -58,4 +60,7 @@ public interface IPerforEvaluateService {
    * @return 结果
    */
   public int deletePerforApproveTaskById(Long id);
+
+
+  List<OwnersInfo> getTaskOwners(PerforApproveTask approveTask);
 }

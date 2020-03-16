@@ -37,6 +37,7 @@
             type="text"
             icon="el-icon-view"
             @click="handleView(scope.row)"
+            v-hasPermi="['performance:evaluate:update']"
           >评判</el-button>
         </template>
       </el-table-column>
@@ -94,7 +95,8 @@
 import {
   listEvaluate,
   getEvaluate,
-  updateEvaluate
+  updateEvaluate,
+  listTaskOwners
 } from "@/api/performance/evaluate";
 import { listApplication } from "@/api/performance/application"
 import { listUser } from "@/api/system/user";
@@ -142,8 +144,8 @@ export default {
     };
   },
   created() {
-    listUser().then(response => {
-          this.userOptions = response.rows;
+    listTaskOwners().then(response => {
+          this.userOptions = response.data;
         });
     this.getList();
     this.getDicts("sys_notice_status").then(response => {

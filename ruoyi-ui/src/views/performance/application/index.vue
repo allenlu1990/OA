@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
     <el-form :inline="true" label-width="68px">
-      <el-form-item label="被考核人员" label-width="85px">
+      <!-- <el-form-item label="被考核人员" label-width="85px">
         <el-select v-model="queryParams.ownerId" filterable placeholder="请选择" clearable size="small">
           <el-option
             v-for="item in userOptions"
@@ -10,9 +10,19 @@
             :value="item.userId"
           ></el-option>
         </el-select>
+      </el-form-item> -->
+
+      <el-form-item label="目标标题">
+        <el-input
+          v-model="queryParams.applicationTitle"
+          placeholder="请输入目标标题"
+          clearable
+          size="small"
+          @keyup.enter.native="handleQuery"
+        />
       </el-form-item>
 
-      <el-form-item label="操作人员">
+      <!-- <el-form-item label="操作人员">
         <el-input
           v-model="queryParams.createBy"
           placeholder="请输入操作人员"
@@ -20,7 +30,7 @@
           size="small"
           @keyup.enter.native="handleQuery"
         />
-      </el-form-item>
+      </el-form-item> -->
 
       <el-form-item label="考核月份">
         <el-date-picker value-format="yyyy-MM-dd HH:mm:ss" v-model="queryParams.applicationDate" type="month" placeholder="选择月"></el-date-picker>
@@ -41,7 +51,7 @@
     <el-table v-loading="loading" :data="applicationList">
       <el-table-column label="序号" align="center" prop="applicationId" width="100" />
       <el-table-column label="申请标题" align="center" prop="applicationTitle" :show-overflow-tooltip="true"/>
-      <el-table-column label="被考核人员" align="center" prop="ownerName" />
+      <!-- <el-table-column label="被考核人员" align="center" prop="ownerName" /> -->
       <el-table-column label="考核时间段" align="center" prop="applicationDate" width="100">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.applicationDate, '{y}年{m}月') }}</span>
@@ -61,7 +71,7 @@
             type="text"
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
-            v-hasPermi="['performance:application:edit']"
+            v-hasPermi="['performance:application:update']"
           >修改</el-button>
           <el-button
             size="mini"
@@ -87,8 +97,8 @@
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-row>
            <el-col :span="12">
-            <el-form-item label="申请标题" prop="applicationTitle">
-              <el-input v-model="form.applicationTitle" placeholder="请输入申请标题" />
+            <el-form-item label="目标标题" prop="applicationTitle">
+              <el-input v-model="form.applicationTitle" placeholder="请输入目标标题" />
             </el-form-item>
           </el-col>
           <el-col :span="12">
@@ -102,7 +112,7 @@
               </el-radio-group>
             </el-form-item>
           </el-col>
-          <el-col :span="12">
+          <!-- <el-col :span="12">
             <el-form-item label="被考核人员" prop="ownerId" label-width="100px">
                <el-select v-model="form.ownerId" filterable placeholder="请选择" clearable size="small">
                   <el-option
@@ -113,7 +123,7 @@
                   ></el-option>
                </el-select>
             </el-form-item>
-          </el-col>
+          </el-col> -->
           <el-col :span="12">
                <el-form-item label="考核月份" prop="applicationDate">
                   <el-date-picker value-format="yyyy-MM-dd HH:mm:ss" v-model="form.applicationDate" type="month" placeholder="选择月"></el-date-picker>
@@ -182,16 +192,16 @@ export default {
         applicationDate: [
           { required: true, message: "必须选择考核月份", trigger: "blur" }
         ],
-        ownerId: [
-          { required: true, message: "被考核人不能为空", trigger: "blur" }
+        applicationTitle: [
+          { required: true, message: "考核标题不能为空", trigger: "blur" }
         ]
       }
     };
   },
   created() {
-    listUser().then(response => {
-          this.userOptions = response.rows;
-        });
+    // listUser().then(response => {
+    //       this.userOptions = response.rows;
+    //     });
     this.getList();
     this.getDicts("sys_notice_status").then(response => {
       this.statusOptions = response.data;

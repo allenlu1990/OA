@@ -3,9 +3,11 @@ package com.ruoyi.project.performance.service.impl;
 import java.util.List;
 
 import com.ruoyi.common.core.text.Convert;
+import com.ruoyi.project.performance.domain.OwnersInfo;
 import com.ruoyi.project.performance.domain.PerforApproveTask;
 import com.ruoyi.project.performance.mapper.PerforEvaluateMapper;
 import com.ruoyi.project.performance.service.IPerforEvaluateService;
+import com.ruoyi.project.system.domain.SysUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -85,4 +87,10 @@ public class PerforEvaluateServiceImpl implements IPerforEvaluateService {
   public int deletePerforApproveTaskById(Long id) {
     return performanceApproveTaskMapper.deletePerforApproveTaskById(id);
   }
+
+  @Override
+  public List<OwnersInfo> getTaskOwners(PerforApproveTask approveTask) {
+    return performanceApproveTaskMapper.getTaskOwners(approveTask);
+  }
+
 }
