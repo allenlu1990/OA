@@ -6,6 +6,7 @@
   <resultMap type="PerforApproveTask" id="PerforApproveTaskResult">
     <result property="id" column="id"/>
     <result property="approverId" column="approver_id"/>
+    <result property="approverRank" column="approver_rank"/>
     <result property="result" column="result"/>
     <result property="applicationId" column="application_id"/>
     <result property="applicationTitle" column="application_title"/>
@@ -50,11 +51,13 @@
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="approverId != null ">approver_id,</if>
       <if test="applicationId != null ">application_id,</if>
+      <if test="approverRank != null ">approver_rank,</if>
       <if test="result != null  and result != ''">result,</if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="approverId != null ">#{approverId},</if>
       <if test="applicationId != null ">#{applicationId},</if>
+      <if test="approverRank != null ">#{approverRank},</if>
       <if test="result != null  and result != ''">#{result},</if>
     </trim>
   </insert>
@@ -89,6 +92,23 @@
     ) as tmp
     left join sys_user u on tmp.owner_id = u.user_id  left join sys_dept d on u.dept_id = d.dept_id
   </select>
+
+  <select id="selectCorrelateIds" parameterType="Long" resultType="Long">
+    select leader_id from sys_user_leader where user_id = #{0}
+  </select>
+
+  <select id="selectReverseCorrelateIds" parameterType="Long" resultType="Long">
+    select user_id from sys_user_leader where leader_id = #{0}
+  </select>
+
+  <insert id="insertPerforApproveTaskBatch" parameterType="java.util.List">
+    insert into performance_approve_task(approver_id,application_id,approver_rank)
+    values
+    <foreach collection="list" item="item" index="index" separator=",">
+      (#{item.approverId,jdbcType=BIGINT}, #{item.applicationId,jdbcType=BIGINT},#{item.approverRank,jdbcType=INTEGER})
+    </foreach>
+  </insert>
+
 
 </mapper>
 

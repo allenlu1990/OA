@@ -39,6 +39,12 @@
     </where>
   </select>
 
+  <insert id="insertResult" parameterType="Long">
+    insert into performance_result_task (application_id)
+    values (#{0})
+  </insert>
+
+
   <!--<insert id="insertApplication" parameterType="PerforApplication">-->
     <!--insert into performance_application (-->
     <!--<if test="applicationTitle != null and applicationTitle != '' ">application_title,</if>-->

@@ -47,7 +47,7 @@
     </where>
   </select>
 
-  <insert id="insertApplication" parameterType="PerforApplication">
+  <insert id="insertApplication" useGeneratedKeys="true" keyProperty="applicationId" parameterType="PerforApplication">
     insert into performance_application (
     <if test="applicationTitle != null and applicationTitle != '' ">application_title,</if>
     <if test="ownerId != null and ownerId != '' ">owner_id,</if>

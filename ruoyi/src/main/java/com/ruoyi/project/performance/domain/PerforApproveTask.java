@@ -17,10 +17,21 @@ public class PerforApproveTask extends PerforApplication {
    * 审批人ID
    */
   private Long approverId;
+
+  /**
+   * 审批人rank
+   */
+  private Integer approverRank;
   /**
    * 评审结果
    */
   private String result;
+
+//  public PerforApproveTask(Long approverId, Integer approverRank,Long applicationId) {
+//    this.approverId = approverId;
+//    this.approverRank = approverRank;
+//    setApplicationId(applicationId);
+//  }
 
   public static long getSerialVersionUID() {
     return serialVersionUID;
@@ -50,11 +61,20 @@ public class PerforApproveTask extends PerforApplication {
     this.result = result;
   }
 
+  public Integer getApproverRank() {
+    return approverRank;
+  }
+
+  public void setApproverRank(Integer approverRank) {
+    this.approverRank = approverRank;
+  }
+
   @Override
   public String toString() {
     return "PerforApproveTask{" +
         "id=" + id +
         ", approverId=" + approverId +
+        ", approverRank=" + approverRank +
         ", result='" + result + '\'' +
         '}';
   }

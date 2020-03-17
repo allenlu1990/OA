@@ -1,10 +1,10 @@
 package com.ruoyi.project.performance.mapper;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.ruoyi.project.performance.domain.OwnersInfo;
 import com.ruoyi.project.performance.domain.PerforApproveTask;
-import com.ruoyi.project.system.domain.SysUser;
 
 /**
  * 绩效审批Mapper接口
@@ -62,4 +62,10 @@ public interface PerforEvaluateMapper {
   public int deletePerforApproveTaskByIds(String[] ids);
 
   List<OwnersInfo> getTaskOwners(PerforApproveTask approveTask);
+
+  List<Long> selectCorrelateIds(Long id);
+
+  List<Long> selectReverseCorrelateIds(Long id);
+
+  void insertPerforApproveTaskBatch(ArrayList<PerforApproveTask> perforApproveTasks);
 }

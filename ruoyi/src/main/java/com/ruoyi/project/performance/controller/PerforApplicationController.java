@@ -35,8 +35,6 @@ public class PerforApplicationController extends BaseController {
   @GetMapping("/list")
   public TableDataInfo list(PerforApplication application) {
     startPage();
-
-    //TODO 需要考虑特殊人员的可见性问题（例如管理员 领导等）
     application.setOwnerId(SecurityUtils.getLoginUser().getUser().getUserId());
     List<PerforApplication> list = applicationService.selectApplicationList(application);
     return getDataTable(list);
