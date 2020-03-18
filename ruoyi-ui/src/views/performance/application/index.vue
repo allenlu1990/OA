@@ -49,7 +49,7 @@
     </el-form>
 
     <el-table v-loading="loading" :data="applicationList">
-      <el-table-column label="序号" align="center" prop="applicationId" width="100" />
+      <el-table-column label="序号" align="center" type="index" width="50" />
       <el-table-column label="申请标题" align="center" prop="applicationTitle" :show-overflow-tooltip="true"/>
       <!-- <el-table-column label="被考核人员" align="center" prop="ownerName" /> -->
       <el-table-column label="考核时间段" align="center" prop="applicationDate" width="100">

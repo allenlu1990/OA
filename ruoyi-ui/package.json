@@ -1,7 +1,7 @@
 {
   "name": "ruoyi",
   "version": "1.0.0",
-  "description": "OA人员管理系统",
+  "description": "任务管理系统",
   "author": "allen",
   "license": "MIT",
   "scripts": {

@@ -26,7 +26,7 @@ export default {
   },
   data() {
     return {
-      title: 'OA人员管理系统',
+      title: '任务管理系统',
       logo: logoImg
     }
   }
