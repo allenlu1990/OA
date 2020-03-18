@@ -13,13 +13,6 @@ import com.ruoyi.project.system.domain.SysUser;
  * @date 2020-03-15
  */
 public interface IPerforEvaluateService {
-  /**
-   * 查询绩效审批
-   *
-   * @param id 绩效审批ID
-   * @return 绩效审批
-   */
-  public PerforApproveTask selectPerforApproveTaskById(Long id);
 
   /**
    * 查询绩效审批列表

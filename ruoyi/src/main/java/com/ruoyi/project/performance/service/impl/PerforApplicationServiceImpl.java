@@ -57,17 +57,18 @@ public class PerforApplicationServiceImpl implements IPerforApplicationService {
 
   @Override
   public int deleteApplicationById(Long applicationId) {
-    return perforApplicationMapper.deleteApplicationById(applicationId);
+    int re = perforApplicationMapper.deleteApplicationById(applicationId);
+    if (re <=0)
+      return 0;
+    re = deleteEvaluateByApplicationId(applicationId);
+    if (re <=0)
+      return 0;
+    return deleteResultByApplicationId(applicationId);
   }
 
   private void generateEvaluateTasks(PerforApplication application) {
     Long applicationId = application.getApplicationId();
     Long ownerId = application.getOwnerId();
-    //
-    //    List<SysDictData> ranksList = sysDictDataMapper.selectDictDataByType("perfor_evaluate_range");
-    //    HashMap<Long, Double> ranksRatioMap = new HashMap<>();
-    //    ranksList.stream().collect(Collectors.toMap(SysDictData::getDictSort, SysDictData::getDictValue))
-    //        .forEach((k, v) -> ranksRatioMap.put(k, Long.valueOf(v) / 100.0));
 
     HashMap<Integer, List<Long>> ranksIdMap = new HashMap<>();
     //TODO 后续升级改成存储过程
@@ -91,7 +92,6 @@ public class PerforApplicationServiceImpl implements IPerforApplicationService {
     ranksIdMap.forEach((rank, v) -> {
       if (v.size() > 0) {
         v.forEach(id ->{
-          //            perforEvaluateMapper.insertPerforApproveTask(new PerforApproveTask(id,rank,applicationId))
           PerforApproveTask approveTask = new PerforApproveTask();
           approveTask.setApproverId(id);
           approveTask.setApproverRank(rank);
@@ -106,5 +106,13 @@ public class PerforApplicationServiceImpl implements IPerforApplicationService {
 
   private void generateResultTasks(Long applicationId){
     perforResultMapper.insertResult(applicationId);
+  }
+
+  private int deleteEvaluateByApplicationId(Long applicationId){
+    return perforEvaluateMapper.deleteEvaluateByApplicationId(applicationId);
+  }
+
+  private int deleteResultByApplicationId(Long applicationId){
+    return perforResultMapper.deleteResultByApplicationId(applicationId);
   }
 }

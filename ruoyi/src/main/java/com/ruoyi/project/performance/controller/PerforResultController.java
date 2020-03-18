@@ -1,7 +1,5 @@
 package com.ruoyi.project.performance.controller;
 
-import java.util.List;
-
 import com.ruoyi.common.utils.SecurityUtils;
 import com.ruoyi.framework.web.controller.BaseController;
 import com.ruoyi.framework.web.page.TableDataInfo;
@@ -19,8 +17,9 @@ public class PerforResultController extends BaseController {
 
   @Autowired
   IPerforResultService resultService;
+
   /**
-   * 获取绩效申请列表
+   * 获取绩效结果列表
    */
   @PreAuthorize("@ss.hasPermi('performance:result:list')")
   @GetMapping("/list")
@@ -31,14 +30,15 @@ public class PerforResultController extends BaseController {
      * 自己只能看到自己的结果 除了 考核系统管理员可以看到全部人的
      *
      * **/
-    if(result.getOwnerId() == null){
+    if (result.getOwnerId() == null) {
       result.setOwnerId(SecurityUtils.getLoginUser().getUser().getUserId());
-      SecurityUtils.getLoginUser().getUser().getRoles().forEach(role->{
-        if(role.getRoleId() == 100 || role.getRoleId() == 1){
+      SecurityUtils.getLoginUser().getUser().getRoles().forEach(role -> {
+        if (role.getRoleId() == 100 || role.getRoleId() == 1) {
           result.setOwnerId(null);
         }
       });
     }
+
     return getDataTable(resultService.selectResultList(result));
   }
 }

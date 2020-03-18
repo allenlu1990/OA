@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.ruoyi.project.performance.domain.OwnersInfo;
 import com.ruoyi.project.performance.domain.PerforApproveTask;
+import com.ruoyi.project.performance.domain.PerforResult;
 
 /**
  * 绩效审批Mapper接口
@@ -16,10 +17,10 @@ public interface PerforEvaluateMapper {
   /**
    * 查询绩效审批
    *
-   * @param id 绩效审批ID
+   * @param applicationId 绩效申请ID
    * @return 绩效审批
    */
-  public PerforApproveTask selectPerforApproveTaskById(Long id);
+  public List<PerforApproveTask> selectPerforEvaluateByApplicationId(Long applicationId);
 
   /**
    * 查询绩效审批列表
@@ -68,4 +69,6 @@ public interface PerforEvaluateMapper {
   List<Long> selectReverseCorrelateIds(Long id);
 
   void insertPerforApproveTaskBatch(ArrayList<PerforApproveTask> perforApproveTasks);
+
+  int deleteEvaluateByApplicationId(Long applicationId);
 }

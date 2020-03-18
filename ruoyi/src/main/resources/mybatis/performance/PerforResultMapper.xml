@@ -40,49 +40,19 @@
   </select>
 
   <insert id="insertResult" parameterType="Long">
-    insert into performance_result_task (application_id)
-    values (#{0})
+    insert into performance_result_task (application_id) values (#{0})
   </insert>
 
+  <update id="updateResult" parameterType="PerforResult">
+    update performance_result_task
+    <set>
+      result = #{result}
+    </set>
+    where application_id = #{applicationId}
+  </update>
 
-  <!--<insert id="insertApplication" parameterType="PerforApplication">-->
-    <!--insert into performance_application (-->
-    <!--<if test="applicationTitle != null and applicationTitle != '' ">application_title,</if>-->
-    <!--<if test="ownerId != null and ownerId != '' ">owner_id,</if>-->
-    <!--<if test="applicationContent != null and applicationContent != '' ">application_content,</if>-->
-    <!--<if test="applicationDate != null ">application_date,</if>-->
-    <!--<if test="status != null and status != '' ">status,</if>-->
-    <!--<if test="remark != null and remark != ''">remark,</if>-->
-    <!--<if test="createBy != null and createBy != ''">create_by,</if>-->
-    <!--create_time-->
-    <!--)values(-->
-    <!--<if test="applicationTitle != null and applicationTitle != '' ">#{applicationTitle},</if>-->
-    <!--<if test="ownerId != null and ownerId != '' ">#{ownerId},</if>-->
-    <!--<if test="applicationContent != null and applicationContent != '' ">#{applicationContent},</if>-->
-    <!--<if test="applicationDate != null ">#{applicationDate},</if>-->
-    <!--<if test="status != null and status != ''">#{status},</if>-->
-    <!--<if test="remark != null and remark != ''">#{remark},</if>-->
-    <!--<if test="createBy != null and createBy != ''">#{createBy},</if>-->
-    <!--sysdate()-->
-    <!--)-->
-  <!--</insert>-->
-
-  <!--<update id="updateApplication" parameterType="PerforApplication">-->
-    <!--update performance_application-->
-    <!--<set>-->
-      <!--<if test="applicationTitle != null and applicationTitle != ''">application_title = #{applicationTitle},</if>-->
-      <!--<if test="ownerId != null and ownerId != ''">owner_id = #{ownerId},</if>-->
-      <!--<if test="applicationContent != null">application_content = #{applicationContent},</if>-->
-      <!--<if test="applicationDate != null ">application_date = #{applicationDate},</if>-->
-      <!--<if test="status != null and status != ''">status = #{status},</if>-->
-      <!--<if test="updateBy != null and updateBy != ''">update_by = #{updateBy},</if>-->
-      <!--update_time = sysdate()-->
-    <!--</set>-->
-    <!--where application_id = #{applicationId}-->
-  <!--</update>-->
-
-  <!--<delete id="deleteApplicationById" parameterType="Long">-->
-        <!--delete from performance_application where application_id = #{applicationId}-->
-  <!--</delete>-->
+  <delete id="deleteResultByApplicationId" parameterType="Long">
+    delete from performance_result_task where application_id = #{applicationId}
+  </delete>
 
 </mapper>

@@ -8,4 +8,8 @@ public interface PerforResultMapper  {
   List<PerforResult> selectResultList(PerforResult result);
 
   int insertResult(Long applicationId);
+
+  int updateResult(PerforResult perforResult);
+
+  int deleteResultByApplicationId(Long applicationId);
 }

@@ -1,8 +1,8 @@
 <template>
   <div class="app-container">
     <el-form :inline="true" label-width="68px">
-      <el-form-item label="被考核人员" label-width="85px">
-        <el-select v-model="queryParams.ownerId" filterable placeholder="请选择" clearable size="small">
+      <el-form-item label="被考核人员" label-width="85px" v-hasPermi="['system:user:list']">
+        <el-select v-model="queryParams.ownerId" filterable placeholder="请选择" clearable size="small" @click.native="getUsers">
           <el-option
             v-for="item in userOptions"
             :key="item.userId"
@@ -106,7 +106,6 @@ export default {
       // 状态数据字典
       statusOptions: [],
      
-      
       // 查询参数
       queryParams: {
         pageNum: 1,
@@ -119,9 +118,6 @@ export default {
     };
   },
   created() {
-    listUser().then(response => {
-          this.userOptions = response.rows;
-        });
     this.getList();
     this.getDicts("sys_notice_status").then(response => {
       this.statusOptions = response.data;
@@ -137,6 +133,11 @@ export default {
         this.total = response.total;
         this.loading = false;
       });
+    },
+    getUsers(){
+        listUser().then(response => {
+          this.userOptions = response.rows;
+        });
     },
     handleView(row) {
       this.open = true;
