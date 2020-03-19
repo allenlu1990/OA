@@ -67,6 +67,12 @@ public class SysUser extends BaseEntity
     /** 岗位组 */
     private Long[] postIds;
 
+    /**领导id**/
+    private Long leaderId;
+
+    /**领导用户名**/
+    private String leaderName;
+
     public SysUser()
     {
 
@@ -267,4 +273,19 @@ public class SysUser extends BaseEntity
         this.postIds = postIds;
     }
 
+    public Long getLeaderId() {
+        return leaderId;
+    }
+
+    public void setLeaderId(Long leaderId) {
+        this.leaderId = leaderId;
+    }
+
+    public String getLeaderName() {
+        return leaderName;
+    }
+
+    public void setLeaderName(String leaderName) {
+        this.leaderName = leaderName;
+    }
 }

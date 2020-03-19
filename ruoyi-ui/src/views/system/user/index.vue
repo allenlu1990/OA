@@ -85,7 +85,7 @@
         <el-table v-loading="loading" :data="userList">
           <el-table-column label="用户编号" align="center" prop="userId" />
           <el-table-column label="用户名称" align="center" prop="userName" />
-          <el-table-column label="用户昵称" align="center" prop="nickName" />
+          <el-table-column label="上级领导" align="center" prop="leaderName" />
           <el-table-column label="部门" align="center" prop="dept.deptName" />
           <el-table-column label="手机号码" align="center" prop="phonenumber" width="120" />
           <el-table-column label="状态" align="center">
@@ -230,6 +230,18 @@
               </el-select>
             </el-form-item>
           </el-col>
+          <el-col :span="12">
+            <el-form-item label="上级领导" prop="leaderId">
+              <el-select v-model="form.leaderId" placeholder="请选择" clearable size="small">
+                <el-option
+                  v-for="item in leaderOptions"
+                  :key="item.userId"
+                  :label="item.userName"
+                  :value="item.userId"
+                ></el-option>
+              </el-select>
+            </el-form-item>
+          </el-col>
           <el-col :span="24">
             <el-form-item label="备注">
               <el-input v-model="form.remark" type="textarea" placeholder="请输入内容"></el-input>
@@ -283,6 +295,8 @@ export default {
       postOptions: [],
       // 角色选项
       roleOptions: [],
+      // 领导人选
+      leaderOptions: [],
       // 表单参数
       form: {},
       defaultProps: {
@@ -325,6 +339,9 @@ export default {
             message: "请输入正确的手机号码",
             trigger: "blur"
           }
+        ],
+        leaderId: [
+          { required: true, message: "上级领导不能为空", trigger: "blur" }
         ]
       }
     };
@@ -387,6 +404,12 @@ export default {
         this.roleOptions = response.rows;
       });
     },
+    /** 查询leader列表 */
+    getLeaders() {
+      listUser().then(response => {
+        this.leaderOptions = response.rows;
+      });
+    },
     // 用户状态修改
     handleStatusChange(row) {
       let text = row.status === "0" ? "启用" : "停用";
@@ -436,6 +459,7 @@ export default {
       this.getTreeselect();
       this.getPosts();
       this.getRoles();
+      this.getLeaders();
       this.open = true;
       this.title = "添加用户";
       this.form.password = this.initPassword;
@@ -446,6 +470,7 @@ export default {
       this.getTreeselect();
       this.getPosts();
       this.getRoles();
+      this.getLeaders();
       getUser(row.userId).then(response => {
         this.form = response.data;
         this.form.postIds = response.postIds;
