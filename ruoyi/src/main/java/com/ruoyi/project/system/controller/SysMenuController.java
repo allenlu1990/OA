@@ -58,7 +58,7 @@ public class SysMenuController extends BaseController
     /**
      * 获取菜单下拉树列表
      */
-    @PreAuthorize("@ss.hasPermi('system:menu:query')")
+//    @PreAuthorize("@ss.hasPermi('system:menu:query')")
     @GetMapping("/treeselect")
     public AjaxResult treeselect(SysMenu dept)
     {
@@ -69,7 +69,7 @@ public class SysMenuController extends BaseController
     /**
      * 加载对应角色菜单列表树
      */
-    @PreAuthorize("@ss.hasPermi('system:menu:query')")
+//    @PreAuthorize("@ss.hasPermi('system:menu:query')")
     @GetMapping(value = "/roleMenuTreeselect/{roleId}")
     @ResponseBody
     public AjaxResult roleMenuTreeselect(@PathVariable("roleId") Long roleId)

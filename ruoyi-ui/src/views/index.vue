@@ -96,14 +96,6 @@ export default {
         this.loading = false;
       });
     },
-    // 公告状态字典翻译
-    statusFormat(row, column) {
-      return this.selectDictLabel(this.statusOptions, row.status);
-    },
-    // 公告状态字典翻译
-    typeFormat(row, column) {
-      return this.selectDictLabel(this.typeOptions, row.noticeType);
-    },
     getInfo(notice){
       this.open = true;
       this.form = notice;

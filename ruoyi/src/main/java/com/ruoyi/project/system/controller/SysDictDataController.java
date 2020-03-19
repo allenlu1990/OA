@@ -56,7 +56,7 @@ public class SysDictDataController extends BaseController
     /**
      * 根据字典类型查询字典数据信息
      */
-    @PreAuthorize("@ss.hasPermi('system:dict:query')")
+//    @PreAuthorize("@ss.hasPermi('system:dict:query')")
     @GetMapping(value = "/dictType/{dictType}")
     public AjaxResult dictType(@PathVariable String dictType)
     {
