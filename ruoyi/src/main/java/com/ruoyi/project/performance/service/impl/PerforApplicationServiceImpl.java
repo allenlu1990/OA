@@ -13,6 +13,7 @@ import com.ruoyi.project.performance.service.IPerforApplicationService;
 import com.ruoyi.project.system.mapper.SysDictDataMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class PerforApplicationServiceImpl implements IPerforApplicationService {
@@ -40,6 +41,7 @@ public class PerforApplicationServiceImpl implements IPerforApplicationService {
   }
 
   @Override
+  @Transactional
   public int insertApplication(PerforApplication application) {
     perforApplicationMapper.insertApplication(application);
     if (application.getApplicationId() > 0) {
@@ -56,6 +58,7 @@ public class PerforApplicationServiceImpl implements IPerforApplicationService {
   }
 
   @Override
+  @Transactional
   public int deleteApplicationById(Long applicationId) {
     int re = perforApplicationMapper.deleteApplicationById(applicationId);
     if (re <=0)
