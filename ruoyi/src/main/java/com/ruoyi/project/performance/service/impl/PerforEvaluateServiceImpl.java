@@ -120,32 +120,26 @@ public class PerforEvaluateServiceImpl implements IPerforEvaluateService {
 
     List<PerforApproveTask> approveTasksList = performanceApproveTaskMapper.selectPerforEvaluateByApplicationId(applicationId);
 
-    //    Map<Integer, List<PerforApproveTask>> rankApproveMap = approveTasksList.stream().collect(Collectors.groupingBy(PerforApproveTask::getApproverRank));
-    //    Map<Integer, List<String>> ranksResultMap = rankApproveMap.entrySet().stream().map(v -> new AbstractMap.SimpleEntry<>(v.getKey(), v.getValue().stream().map(PerforApproveTask::getResult).collect(Collectors.toList())))
-    //         .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
-
     Map<Integer, List<String>> ranksResultMap = approveTasksList.stream().collect(Collectors.groupingBy(PerforApproveTask::getApproverRank))
         .entrySet().stream().map(v -> new AbstractMap.SimpleEntry<>(v.getKey(), v.getValue().stream().map(PerforApproveTask::getResult).collect(Collectors.toList())))
         .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
 
     AtomicInteger numberResult = new AtomicInteger();
-    ranksResultMap.forEach((rank, results) -> {
-      if (ranksRatioMap.containsKey(rank)) {
+    ranksRatioMap.forEach((rank, ratio) -> {
+      if (ranksResultMap.containsKey(rank)) {
         //TODO 没评论按满分算
-        //去掉null
+        List<String> results = ranksResultMap.get(rank);
         results.removeAll(Collections.singleton(null));
-
         double average = results.stream().filter(result -> (!"".equals(result) || result != null))
             .map(NumberUtils::changeLevelToNumber)
             .mapToDouble(v -> v).average().orElse(100);
-        if (average > 0) {
           numberResult.addAndGet(new Double(average * ranksRatioMap.get(rank)).intValue());
-        }
       } else {
         //没有的级别就按100算
         numberResult.addAndGet(new Double(ranksRatioMap.get(rank) * 100).intValue());
       }
     });
+
     String stringResult = changeNumberToLevel(numberResult.get());
     PerforResult perforResult = new PerforResult();
     perforResult.setResult(stringResult);
