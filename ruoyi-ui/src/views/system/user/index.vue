@@ -232,7 +232,7 @@
           </el-col>
           <el-col :span="12">
             <el-form-item label="上级领导" prop="leaderId">
-              <el-select v-model="form.leaderId" placeholder="请选择" clearable size="small">
+              <el-select v-model="form.leaderId" placeholder="请选择" clearable filterable size="small">
                 <el-option
                   v-for="item in leaderOptions"
                   :key="item.userId"
