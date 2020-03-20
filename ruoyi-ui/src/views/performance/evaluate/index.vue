@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
     <el-form :inline="true" label-width="68px">
-      <el-form-item label="被考核人员" label-width="85px">
+      <el-form-item label="责任人" label-width="85px">
         <el-select v-model="queryParams.ownerId" filterable placeholder="请选择" clearable size="small">
           <el-option
             v-for="item in userOptions"
@@ -11,7 +11,7 @@
           ></el-option>
         </el-select>
       </el-form-item>
-      <el-form-item label="考核月份">
+      <el-form-item label="计划月份">
         <el-date-picker value-format="yyyy-MM-dd HH:mm:ss" v-model="queryParams.applicationDate" type="month" placeholder="选择月"></el-date-picker>
       </el-form-item>
       <el-form-item>
@@ -21,9 +21,9 @@
 
     <el-table v-loading="loading" :data="evaluateList">
       <el-table-column label="序号" align="center" type="index" width="50" />
-      <el-table-column label="申请标题" align="center" prop="applicationTitle" :show-overflow-tooltip="true"/>
-      <el-table-column label="被考核人员" align="center" prop="ownerName" />
-      <el-table-column label="考核时间段" align="center" prop="applicationDate" width="100">
+      <el-table-column label="任务名称" align="center" prop="applicationTitle" :show-overflow-tooltip="true"/>
+      <el-table-column label="责任人" align="center" prop="ownerName" />
+      <el-table-column label="计划月份" align="center" prop="applicationDate" width="100">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.applicationDate, '{y}年{m}月') }}</span>
         </template>
@@ -55,23 +55,23 @@
       <el-form ref="form" :model="form" :rules="rules" label-width="100px" size="mini">
         <el-row>
           <el-col :span="12">
-            <el-form-item label="申请标题：">{{ form.applicationTitle }}</el-form-item>
+            <el-form-item label="任务名称：">{{ form.applicationTitle }}</el-form-item>
             <el-form-item label="状态：">
               <div v-if="form.status == 0">正常</div>
               <div v-else-if="form.status == 1">关闭</div>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="被考核人员：">{{ form.ownerName }}</el-form-item>
-            <el-form-item label="考核月份：">  
+            <el-form-item label="责任人：">{{ form.ownerName }}</el-form-item>
+            <el-form-item label="计划月份：">  
                {{ parseTime(form.applicationDate, '{y}年{m}月') }}
             </el-form-item>
           </el-col>
           <el-col :span="24">
-            <el-form-item label="考核内容：" > <b v-html = 'form.applicationContent'></b> </el-form-item>
+            <el-form-item label="任务内容：" > <b v-html = 'form.applicationContent'></b> </el-form-item>
           </el-col>
         </el-row>
-        <el-form-item label="考核结果" prop="result" label-width="85px">
+        <el-form-item label="考评结果" prop="result" label-width="85px">
           <el-select v-model="form.result" filterable placeholder="请选择" clearable size="small">
             <el-option
                v-for="item in resultOptions"

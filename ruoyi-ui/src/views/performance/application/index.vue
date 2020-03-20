@@ -12,10 +12,10 @@
         </el-select>
       </el-form-item> -->
 
-      <el-form-item label="目标标题">
+      <el-form-item label="任务名称">
         <el-input
           v-model="queryParams.applicationTitle"
-          placeholder="请输入目标标题"
+          placeholder="请输入任务名称"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
@@ -32,7 +32,7 @@
         />
       </el-form-item> -->
 
-      <el-form-item label="考核月份">
+      <el-form-item label="计划月份">
         <el-date-picker value-format="yyyy-MM-dd HH:mm:ss" v-model="queryParams.applicationDate" type="month" placeholder="选择月"></el-date-picker>
       </el-form-item>
 
@@ -50,9 +50,9 @@
 
     <el-table v-loading="loading" :data="applicationList">
       <el-table-column label="序号" align="center" type="index" width="50" />
-      <el-table-column label="申请标题" align="center" prop="applicationTitle" :show-overflow-tooltip="true"/>
+      <el-table-column label="任务名称" align="center" prop="applicationTitle" :show-overflow-tooltip="true"/>
       <!-- <el-table-column label="被考核人员" align="center" prop="ownerName" /> -->
-      <el-table-column label="考核时间段" align="center" prop="applicationDate" width="100">
+      <el-table-column label="计划月份" align="center" prop="applicationDate" width="100">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.applicationDate, '{y}年{m}月') }}</span>
         </template>
@@ -97,8 +97,8 @@
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-row>
            <el-col :span="12">
-            <el-form-item label="目标标题" prop="applicationTitle">
-              <el-input v-model="form.applicationTitle" placeholder="请输入目标标题" />
+            <el-form-item label="任务名称" prop="applicationTitle">
+              <el-input v-model="form.applicationTitle" placeholder="请输入任务名称" />
             </el-form-item>
           </el-col>
           <el-col :span="12">
@@ -125,12 +125,12 @@
             </el-form-item>
           </el-col> -->
           <el-col :span="12">
-               <el-form-item label="考核月份" prop="applicationDate">
+               <el-form-item label="计划月份" prop="applicationDate">
                   <el-date-picker value-format="yyyy-MM-dd HH:mm:ss" v-model="form.applicationDate" type="month" placeholder="选择月"></el-date-picker>
                </el-form-item>
          </el-col>
           <el-col :span="24">
-            <el-form-item label="内容">
+            <el-form-item label="任务内容">
               <Editor v-model="form.applicationContent" />
             </el-form-item>
           </el-col>
@@ -190,10 +190,10 @@ export default {
       // 表单校验
       rules: {
         applicationDate: [
-          { required: true, message: "必须选择考核月份", trigger: "blur" }
+          { required: true, message: "必须选择计划月份", trigger: "blur" }
         ],
         applicationTitle: [
-          { required: true, message: "考核标题不能为空", trigger: "blur" }
+          { required: true, message: "任务名称不能为空", trigger: "blur" }
         ]
       }
     };
@@ -246,7 +246,7 @@ export default {
     handleAdd() {
       this.reset();
       this.open = true;
-      this.title = "添加考核";
+      this.title = "添加工作任务";
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
@@ -254,7 +254,7 @@ export default {
       getApplication(row.applicationId).then(response => {
         this.form = response.data;
         this.open = true;
-        this.title = "修改考核";
+        this.title = "修改工作任务";
       });
     },
     /** 提交按钮 */
