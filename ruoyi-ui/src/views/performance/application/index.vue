@@ -129,6 +129,18 @@
                   <el-date-picker value-format="yyyy-MM-dd HH:mm:ss" v-model="form.applicationDate" type="month" placeholder="选择月"></el-date-picker>
                </el-form-item>
          </el-col>
+         <el-col :span="12">
+               <el-form-item label="确认人" prop="applicationConfirmer">
+                  <el-select v-model="form.confirmer" filterable placeholder="请选择" clearable size="small">
+                  <el-option
+                     v-for="item in userOptions"
+                     :key="item.userId"
+                     :label="item.userName"
+                     :value="item.userId"
+                  ></el-option>
+               </el-select>
+               </el-form-item>
+         </el-col>
           <el-col :span="24">
             <el-form-item label="任务内容">
               <Editor v-model="form.applicationContent" />
@@ -199,9 +211,9 @@ export default {
     };
   },
   created() {
-    // listUser().then(response => {
-    //       this.userOptions = response.rows;
-    //     });
+    listUser().then(response => {
+          this.userOptions = response.rows;
+        });
     this.getList();
     this.getDicts("sys_notice_status").then(response => {
       this.statusOptions = response.data;
@@ -233,6 +245,7 @@ export default {
         ownerId: undefined,
         applicationDate: undefined,
         applicationContent: undefined,
+        confirmer: undefined,
         status: "0"
       };
       this.resetForm("form");

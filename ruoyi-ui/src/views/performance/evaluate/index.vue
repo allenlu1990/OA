@@ -80,6 +80,15 @@
                :value="item.dictLabel"
             ></el-option>
          </el-select>
+         (考评结果为A+或者B以下需要填写理由说明)
+        </el-form-item>
+        <el-form-item v-if="['A+','B-','C+','C','C-','D','D+','D-'].includes(form.result)" label="考评理由" label-width="85px">
+          <el-input
+            type="textarea"
+            :rows="2"
+            placeholder="请输入内容"
+            v-model="result_reason">
+          </el-input>
         </el-form-item>
       </el-form>
 
@@ -185,7 +194,8 @@ export default {
         ownerId: undefined,
         applicationDate: undefined,
         applicationContent: undefined,
-        status: "0"
+        status: "0",
+        result: undefined
       };
       this.resetForm("form");
     },

@@ -10,7 +10,8 @@
              <div class="notice_list">  
                <ul>
                   <li v-for="(notice,index) in noticeList" :key="index">
-                    <a class="a_style" @click="getInfo(notice)">{{notice.noticeTitle}}</a>
+                    <el-link type="primary" @click="getInfo(notice)">{{notice.noticeTitle}}</el-link>
+                    <!-- <a class="a_style" @click="getInfo(notice)">{{notice.noticeTitle}}</a> -->
                     <span class="create_time"> {{ notice.createTime }}</span>
                     <p/>
                   </li>
