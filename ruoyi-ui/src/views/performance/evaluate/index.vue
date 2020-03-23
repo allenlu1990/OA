@@ -87,7 +87,7 @@
             type="textarea"
             :rows="2"
             placeholder="请输入内容"
-            v-model="result_reason">
+            v-model="form.remark">
           </el-input>
         </el-form-item>
       </el-form>
@@ -195,7 +195,8 @@ export default {
         applicationDate: undefined,
         applicationContent: undefined,
         status: "0",
-        result: undefined
+        result: undefined,
+        remark: undefined
       };
       this.resetForm("form");
     },

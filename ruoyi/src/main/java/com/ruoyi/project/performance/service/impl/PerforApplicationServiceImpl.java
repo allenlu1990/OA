@@ -61,11 +61,13 @@ public class PerforApplicationServiceImpl implements IPerforApplicationService {
   @Transactional
   public int deleteApplicationById(Long applicationId) {
     int re = perforApplicationMapper.deleteApplicationById(applicationId);
-    if (re <=0)
+    if (re <= 0) {
       return 0;
+    }
     re = deleteEvaluateByApplicationId(applicationId);
-    if (re <=0)
+    if (re <= 0) {
       return 0;
+    }
     return deleteResultByApplicationId(applicationId);
   }
 
@@ -74,27 +76,35 @@ public class PerforApplicationServiceImpl implements IPerforApplicationService {
     Long ownerId = application.getOwnerId();
 
     HashMap<Integer, List<Long>> ranksIdMap = new HashMap<>();
+    //TODO 确认人
+    List<Long> confirmerIds = application.getConfirmerIds();
     //TODO 后续升级改成存储过程
     //找上级
     List<Long> leaderId = perforEvaluateMapper.selectCorrelateIds(ownerId);
+    leaderId.removeAll(confirmerIds);
+    leaderId.addAll(confirmerIds);
     if (leaderId.size() > 0) {
       ranksIdMap.put(3, leaderId);
       //找领导的下级（找平级）
       List<Long> leaderSubordinatesId = perforEvaluateMapper.selectReverseCorrelateIds(leaderId.get(0));
+      leaderSubordinatesId.removeAll(confirmerIds);
       //去掉自己
       leaderSubordinatesId.remove(ownerId);
       ranksIdMap.put(2, leaderSubordinatesId);
       //找上上级
       List<Long> leaderLeaderId = perforEvaluateMapper.selectCorrelateIds(leaderId.get(0));
+      leaderLeaderId.removeAll(confirmerIds);
       ranksIdMap.put(4, leaderLeaderId);
     }
     //找下级
     List<Long> subordinatesId = perforEvaluateMapper.selectReverseCorrelateIds(ownerId);
+    subordinatesId.removeAll(confirmerIds);
     ranksIdMap.put(1, subordinatesId);
+
     ArrayList<PerforApproveTask> perforApproveTasks = new ArrayList<>();
     ranksIdMap.forEach((rank, v) -> {
       if (v.size() > 0) {
-        v.forEach(id ->{
+        v.forEach(id -> {
           PerforApproveTask approveTask = new PerforApproveTask();
           approveTask.setApproverId(id);
           approveTask.setApproverRank(rank);
@@ -107,15 +117,15 @@ public class PerforApplicationServiceImpl implements IPerforApplicationService {
     generateResultTasks(applicationId);
   }
 
-  private void generateResultTasks(Long applicationId){
+  private void generateResultTasks(Long applicationId) {
     perforResultMapper.insertResult(applicationId);
   }
 
-  private int deleteEvaluateByApplicationId(Long applicationId){
+  private int deleteEvaluateByApplicationId(Long applicationId) {
     return perforEvaluateMapper.deleteEvaluateByApplicationId(applicationId);
   }
 
-  private int deleteResultByApplicationId(Long applicationId){
+  private int deleteResultByApplicationId(Long applicationId) {
     return perforResultMapper.deleteResultByApplicationId(applicationId);
   }
 }

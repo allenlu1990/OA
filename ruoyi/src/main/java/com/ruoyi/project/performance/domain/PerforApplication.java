@@ -1,6 +1,7 @@
 package com.ruoyi.project.performance.domain;
 
 import java.util.Date;
+import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.ruoyi.framework.web.domain.BaseEntity;
@@ -29,6 +30,17 @@ public class PerforApplication extends BaseEntity {
 
   /** 申请状态（0正常 1关闭） */
   private String status;
+
+  /** 确认人 **/
+  private List<Long> confirmerIds;
+
+  public List<Long> getConfirmerIds() {
+    return confirmerIds;
+  }
+
+  public void setConfirmerIds(List<Long> confirmerIds) {
+    this.confirmerIds = confirmerIds;
+  }
 
   public String getOwnerName() {
     return ownerName;
