@@ -694,8 +694,8 @@ create table gen_table_column (
 
 drop table if exists performance_application;
 CREATE TABLE `performance_application` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '绩效申请ID',
-  `owner_id` int(11) DEFAULT NULL COMMENT '所属人userID',
+  `application_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '绩效申请ID',
+  `owner_id` bigint(20) DEFAULT NULL COMMENT '所属人userID',
   `create_by` varchar(64) DEFAULT '' COMMENT '创建者',
   `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `update_by` varchar(64) DEFAULT '' COMMENT '更新者',
@@ -705,32 +705,30 @@ CREATE TABLE `performance_application` (
   `application_content` varchar(2000) DEFAULT NULL COMMENT '考核内容',
   `application_date` datetime DEFAULT NULL COMMENT '考核时间点',
   `status` char(1) DEFAULT NULL COMMENT '申请状态（0正常 1关闭）',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='绩效申请表';
+  PRIMARY KEY (`application_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8 COMMENT='绩效申请表';
 
 drop table if exists performance_approve_task;
 CREATE TABLE `performance_approve_task` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '任务ID',
-  `date` timestamp NULL DEFAULT NULL COMMENT '任务所属时间点',
-  `approver_id` int(11) DEFAULT NULL COMMENT '审批人ID',
-  `owner_id` int(11) DEFAULT NULL COMMENT '所属人ID',
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '任务ID',
+  `approver_id` bigint(20) DEFAULT NULL COMMENT '审批人ID',
+  `application_id` bigint(20) DEFAULT NULL COMMENT '申请ID',
+  `approver_rank` int(11) DEFAULT NULL,
   `result` varchar(11) DEFAULT NULL COMMENT '评审结果',
-  `application_id` int(11) DEFAULT NULL COMMENT '申请ID',
+  `remark` varchar(500) DEFAULT NULL COMMENT '评论理由',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='绩效审批表';
+) ENGINE=InnoDB AUTO_INCREMENT=145 DEFAULT CHARSET=utf8 COMMENT='绩效审批表';
 
 drop table if exists performance_result_task;
 CREATE TABLE `performance_result_task` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '结果任务ID',
-  `owner_id` int(11) DEFAULT NULL COMMENT '所属人ID',
-  `date` timestamp NULL DEFAULT NULL COMMENT '所属时间点',
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '结果任务ID',
+  `application_id` bigint(20) DEFAULT NULL COMMENT '申请ID',
   `result` varchar(11) DEFAULT NULL COMMENT '评审结果',
-  `application_id` int(11) DEFAULT NULL COMMENT '申请ID',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='绩效评审结果表';
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8 COMMENT='绩效评审结果表';
 
 drop table if exists sys_user_leader;
 CREATE TABLE `sys_user_leader` (
-  `user_id` int(11) DEFAULT NULL COMMENT '用户ID',
-  `leader_id` int(11) DEFAULT NULL COMMENT '上级领导用户ID'
+  `user_id` bigint(11) DEFAULT NULL COMMENT '用户ID',
+  `leader_id` bigint(11) DEFAULT NULL COMMENT '上级领导用户ID'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户与领导关联表';
