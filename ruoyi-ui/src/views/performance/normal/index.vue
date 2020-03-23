@@ -1,9 +1,9 @@
 <template>
   <div class="app-container">
-    <el-form :model="dynamicValidateForm" ref="dynamicValidateForm" label-width="100px" class="demo-dynamic">
+    <el-form :model="dynamicValidateForm" ref="dynamicValidateForm" :rules="rules" label-width="100px" class="demo-dynamic">
       <el-row>
         <el-col :span="6">
-          <el-form-item label="考核类型" label-width="85px">
+          <el-form-item label="考核类型" prop="type" label-width="85px">
             <el-select v-model="dynamicValidateForm.type" filterable placeholder="请选择" clearable size="small">
               <el-option
                 v-for="item in typeOptions"
@@ -15,7 +15,7 @@
           </el-form-item>
           </el-col>
           <el-col :span="12">
-          <el-form-item label="考查月份" label-width="85px">
+          <el-form-item label="考查月份" prop="date" label-width="85px">
             <el-date-picker value-format="yyyy-MM-dd HH:mm:ss" v-model="dynamicValidateForm.date" type="month" placeholder="选择月"></el-date-picker>
           </el-form-item>
         </el-col>
@@ -83,6 +83,15 @@ export default {
   },
   data() {
     return {
+      // 表单校验
+      rules: {
+        date: [
+          { required: true, message: "必须选择考核月份", trigger: "blur" }
+        ],
+        type: [
+          { required: true, message: "任务类型不能为空", trigger: "blur" }
+        ]
+      },
       //考评类型
       typeOptions: [
         { typeId: 1, typeName: "采购考核" },

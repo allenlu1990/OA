@@ -131,7 +131,7 @@
          </el-col>
          <el-col :span="12">
                <el-form-item label="确认人" prop="applicationConfirmer">
-                  <el-select v-model="form.confirmer" filterable placeholder="请选择" clearable size="small">
+                  <el-select v-model="form.confirmer" filterable multiple placeholder="请选择" clearable size="small">
                   <el-option
                      v-for="item in userOptions"
                      :key="item.userId"

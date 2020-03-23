@@ -80,7 +80,7 @@
                :value="item.dictLabel"
             ></el-option>
          </el-select>
-         (考评结果为A+或者B以下需要填写理由说明)
+         <font color="red">(考评结果为A+或者B以下需要填写理由说明)</font>
         </el-form-item>
         <el-form-item v-if="['A+','B-','C+','C','C-','D','D+','D-'].includes(form.result)" label="考评理由" label-width="85px">
           <el-input
