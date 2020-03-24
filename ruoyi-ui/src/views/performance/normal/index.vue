@@ -139,13 +139,27 @@ export default {
         this.userOptions = response.rows;
       });
     },
+    reset() {
+      this.dynamicValidateForm={
+        evaluations: [
+          {
+            ownerId: "",
+            result: "",
+            reason: "",
+          }
+        ],
+        type: undefined,
+        date: undefined
+      };
+      this.resetForm("dynamicValidateForm");
+    },
     submitForm: function() {
       this.$refs["dynamicValidateForm"].validate(valid => {
         if (valid) {
              addEvaluations(this.dynamicValidateForm).then(response => {
               if (response.code === 200) {
                 this.msgSuccess("修改成功");
-                
+                this.reset();
               } else {
                 this.msgError(response.msg);
               }
