@@ -2,12 +2,14 @@ package com.ruoyi.project.performance.controller;
 
 import com.ruoyi.common.utils.SecurityUtils;
 import com.ruoyi.framework.web.controller.BaseController;
+import com.ruoyi.framework.web.domain.AjaxResult;
 import com.ruoyi.framework.web.page.TableDataInfo;
 import com.ruoyi.project.performance.domain.PerforResult;
 import com.ruoyi.project.performance.service.IPerforResultService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -40,5 +42,15 @@ public class PerforResultController extends BaseController {
     }
 
     return getDataTable(resultService.selectResultList(result));
+  }
+
+
+  /**
+   * 根据绩效申请编号获取评判详细信息
+   */
+  @PreAuthorize("@ss.hasPermi('performance:application:query')")
+  @GetMapping(value = "/evaluations/{applicationId}")
+  public AjaxResult getInfo(@PathVariable Long applicationId) {
+    return AjaxResult.success(resultService.selectEvaluationsByApplicationId(applicationId));
   }
 }

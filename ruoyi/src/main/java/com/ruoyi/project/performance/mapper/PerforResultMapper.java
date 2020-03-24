@@ -2,6 +2,7 @@ package com.ruoyi.project.performance.mapper;
 
 import java.util.List;
 
+import com.ruoyi.project.performance.domain.EvaluationResult;
 import com.ruoyi.project.performance.domain.PerforResult;
 
 public interface PerforResultMapper  {
@@ -12,4 +13,6 @@ public interface PerforResultMapper  {
   int updateResult(PerforResult perforResult);
 
   int deleteResultByApplicationId(Long applicationId);
+
+  List<EvaluationResult> selectEvaluationsByApplicationId(Long applicationId);
 }

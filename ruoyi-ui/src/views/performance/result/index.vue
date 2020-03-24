@@ -72,6 +72,15 @@
           <el-col :span="24">
             <el-form-item label="考评结果：" > {{ form.result }} </el-form-item>
           </el-col>
+          <el-col :span="24">
+            <el-form-item label="考评详情：" > 
+              <el-table :data="form.evaluations" style="width: 80%">
+                  <el-table-column prop="approverName" label="评分人" width="90"></el-table-column>
+                  <el-table-column prop="result" label="结果" width="90"></el-table-column>
+                  <el-table-column prop="remark" label="说明"></el-table-column>
+              </el-table>
+            </el-form-item>
+          </el-col>
         </el-row>
       </el-form>
 
@@ -83,7 +92,7 @@
 </template>
 
 <script>
-import { listResult } from "@/api/performance/result";
+import { listResult,getResultEvaluations} from "@/api/performance/result";
 import { listUser } from "@/api/system/user";
 import Editor from "@/components/Editor";
 
@@ -140,9 +149,13 @@ export default {
         });
     },
     handleView(row) {
-      this.open = true;
       this.form = row;
+      getResultEvaluations(row.applicationId).then(response => {
+          this.form.evaluations = response.data;
+          this.open = true;
+        });
     },
+
     // 公告状态字典翻译
     statusFormat(row, column) {
       return this.selectDictLabel(this.statusOptions, row.status);

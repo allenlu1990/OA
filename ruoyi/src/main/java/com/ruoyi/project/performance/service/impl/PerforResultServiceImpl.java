@@ -2,6 +2,7 @@ package com.ruoyi.project.performance.service.impl;
 
 import java.util.List;
 
+import com.ruoyi.project.performance.domain.EvaluationResult;
 import com.ruoyi.project.performance.domain.PerforResult;
 import com.ruoyi.project.performance.mapper.PerforResultMapper;
 import com.ruoyi.project.performance.service.IPerforResultService;
@@ -16,5 +17,10 @@ public class PerforResultServiceImpl implements IPerforResultService {
   @Override
   public List<PerforResult> selectResultList(PerforResult result) {
     return resultMapper.selectResultList(result);
+  }
+
+  @Override
+  public List<EvaluationResult> selectEvaluationsByApplicationId(Long applicationId) {
+    return resultMapper.selectEvaluationsByApplicationId(applicationId);
   }
 }

@@ -8,3 +8,11 @@ export function listResult(query) {
     params: query
   })
 }
+
+// 根据申请ID查询评判详细
+export function getResultEvaluations(applicationId) {
+  return request({
+    url: '/performance/result/evaluations/' + applicationId,
+    method: 'get'
+  })
+}

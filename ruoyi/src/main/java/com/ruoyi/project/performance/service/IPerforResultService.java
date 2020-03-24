@@ -2,6 +2,7 @@ package com.ruoyi.project.performance.service;
 
 import java.util.List;
 
+import com.ruoyi.project.performance.domain.EvaluationResult;
 import com.ruoyi.project.performance.domain.PerforResult;
 
 public interface IPerforResultService {
@@ -14,4 +15,5 @@ public interface IPerforResultService {
   public List<PerforResult> selectResultList(PerforResult result);
 
 
+  List<EvaluationResult> selectEvaluationsByApplicationId(Long applicationId);
 }
