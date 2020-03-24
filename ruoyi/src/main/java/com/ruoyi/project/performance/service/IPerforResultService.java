@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.ruoyi.project.performance.domain.EvaluationResult;
 import com.ruoyi.project.performance.domain.PerforResult;
+import com.ruoyi.project.performance.domain.PerforResultParent;
 
 public interface IPerforResultService {
   /**
@@ -12,7 +13,7 @@ public interface IPerforResultService {
    * @param result 申请信息
    * @return 申请集合
    */
-  public List<PerforResult> selectResultList(PerforResult result);
+  public List<PerforResultParent> selectResultList(PerforResult result);
 
 
   List<EvaluationResult> selectEvaluationsByApplicationId(Long applicationId);

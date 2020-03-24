@@ -35,7 +35,7 @@ public class PerforResultController extends BaseController {
     if (result.getOwnerId() == null) {
       result.setOwnerId(SecurityUtils.getLoginUser().getUser().getUserId());
       SecurityUtils.getLoginUser().getUser().getRoles().forEach(role -> {
-        if (role.getRoleId() == 100 || role.getRoleId() == 1) {
+        if (role.getRoleId() == 100 || role.getRoleId() == 1 || "evaluation".equals(role.getRoleKey())) {
           result.setOwnerId(null);
         }
       });

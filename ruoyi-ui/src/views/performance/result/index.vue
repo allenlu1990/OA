@@ -19,8 +19,8 @@
       </el-form-item>
     </el-form>
 
-    <el-table v-loading="loading" :data="resultList">
-      <el-table-column label="序号" align="center" type="index" width="50" />
+    <el-table v-loading="loading" :data="resultList" row-key="applicationTitle" border :tree-props="{children: 'children', hasChildren: 'hasChildren'}">
+      <!-- <el-table-column label="序号" align="center" width="50" /> -->
       <el-table-column label="任务名称" align="center" prop="applicationTitle" :show-overflow-tooltip="true"/>
       <el-table-column label="责任人" align="center" prop="ownerName" />
       <el-table-column label="计划月份" align="center" prop="applicationDate" width="100">
@@ -28,7 +28,7 @@
           <span>{{ parseTime(scope.row.applicationDate, '{y}年{m}月') }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="状态" align="center" prop="status" :formatter="statusFormat" width="100"/>
+      <!-- <el-table-column label="状态" align="center" prop="status" :formatter="statusFormat" width="100"/> -->
       <el-table-column label="结果" align="center" prop="result" width="100"/>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
@@ -37,6 +37,7 @@
             type="text"
             icon="el-icon-view"
             @click="handleView(scope.row)"
+            v-if="scope.row.applicationId != undefined"
           >详情</el-button>
         </template>
       </el-table-column>
