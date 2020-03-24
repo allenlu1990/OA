@@ -4,28 +4,33 @@
       <el-row>
         <el-col :span="6">
           <el-form-item label="考核类型" prop="type" label-width="85px">
-            <el-select v-model="dynamicValidateForm.type" filterable placeholder="请选择" clearable size="small">
+            <el-select v-model="dynamicValidateForm.type" filterable clearable placeholder="请选择" size="small">
               <el-option
                 v-for="item in typeOptions"
-                :key="item.typeId"
-                :label="item.typeName"
-                :value="item.typeId"
+                :key="item.dictValue"
+                :label="item.dictLabel"
+                :value="item.dictValue"
               ></el-option>
             </el-select>
           </el-form-item>
           </el-col>
-          <el-col :span="12">
+          <el-col :span="8">
           <el-form-item label="考查月份" prop="date" label-width="85px">
-            <el-date-picker value-format="yyyy-MM-dd HH:mm:ss" v-model="dynamicValidateForm.date" type="month" placeholder="选择月"></el-date-picker>
+            <el-date-picker value-format="yyyy-MM-dd HH:mm:ss" v-model="dynamicValidateForm.date" type="month" placeholder="选择月" @change="getEvaluations"></el-date-picker>
           </el-form-item>
         </el-col>
+        <!-- <el-col :span="6">
+          <el-form-item>
+          <el-button type="primary" icon="el-icon-search" size="mini" @click="getEvaluations">搜索</el-button>
+          </el-form-item>
+        </el-col> -->
       </el-row>
       <el-divider>填写需要考核的人员</el-divider>
 
-    <el-row v-for="(domain, index) in dynamicValidateForm.domains" :key="index"> 
+    <el-row v-for="(evaluation, index) in dynamicValidateForm.evaluations" :key="index"> 
     <el-col :span="6" >
       <el-form-item :label="'责任人'+(index+1)" label-width="85px">
-        <el-select v-model="domain.ownerId" filterable placeholder="请选择" clearable size="small">
+        <el-select v-model="evaluation.ownerId" filterable placeholder="请选择" clearable size="small">
           <el-option
             v-for="item in userOptions"
             :key="item.userId"
@@ -38,7 +43,7 @@
       <el-col :span="12" >
        <el-form-item label="考评结果" prop="result" label-width="85px">
          <el-tooltip class="item" effect="dark" content="考评结果为A+或者B以下需要填写理由说明" placement="bottom-end">
-          <el-select v-model="domain.result" filterable placeholder="请选择" clearable size="small">
+          <el-select v-model="evaluation.result" filterable placeholder="请选择" clearable size="small">
             <el-option
                v-for="item in resultOptions"
                :key="item.dictLabel"
@@ -47,17 +52,17 @@
             ></el-option>
           </el-select>
          </el-tooltip>
-         <el-button @click.prevent="removeDomain(domain)">删除</el-button>
+         <el-button @click.prevent="removeDomain(evaluation)">删除</el-button>
         </el-form-item>
         
     </el-col>
     <el-col :span="14" >
-      <el-form-item v-if="['A+','B-','C+','C','C-','D','D+','D-'].includes(domain.result)" label="考评理由" label-width="85px">
+      <el-form-item v-if="['A+','B-','C+','C','C-','D','D+','D-'].includes(evaluation.result)" label="考评理由" label-width="85px">
           <el-input
             type="textarea"
             :rows="2"
             placeholder="请输入内容"
-            v-model="domain.reason">
+            v-model="evaluation.reason">
           </el-input>
       </el-form-item>
     </el-col>
@@ -73,13 +78,12 @@
 </template>
 
 <script>
-import { listResult } from "@/api/performance/result";
+import { listEvaluations, addEvaluations } from "@/api/performance/normal";
 import { listUser } from "@/api/system/user";
 import Editor from "@/components/Editor";
-import Child from "@/views/performance/normal/child"
 export default {
   components: {
-    Editor,Child
+    Editor
   },
   data() {
     return {
@@ -93,22 +97,17 @@ export default {
         ]
       },
       //考评类型
-      typeOptions: [
-        { typeId: 1, typeName: "采购考核" },
-        { typeId: 2, typeName: "考勤考核" },
-        { typeId: 3, typeName: "生活考核" }
-      ],
+      typeOptions: [],
       // 绩效结果数据字典
       resultOptions: [],
       userOptions:[],
-
+     
       dynamicValidateForm: {
-        domains: [
+        evaluations: [
           {
-            value: "",
             ownerId: "",
             result: "",
-            reason: ""
+            reason: "",
           }
         ],
         type: undefined,
@@ -121,32 +120,47 @@ export default {
     this.getDicts("perfor_result_type").then(response => {
       this.resultOptions = response.data;
     });
+    this.getDicts("perfor_normal_type").then(response => {
+      this.typeOptions = response.data;
+    });
   },
   methods: {
+    getEvaluations(){
+      this.$refs["dynamicValidateForm"].validate(valid => {
+        if (valid) {
+          listEvaluations(this.dynamicValidateForm.type,this.dynamicValidateForm.date).then(response => {
+            this.dynamicValidateForm.evaluations = response.data;
+          });
+        }
+      });
+    },
     getUsers() {
       listUser().then(response => {
         this.userOptions = response.rows;
       });
     },
-    submitForm(formName) {
-      this.$refs[formName].validate(valid => {
+    submitForm: function() {
+      this.$refs["dynamicValidateForm"].validate(valid => {
         if (valid) {
-          alert("submit!");
-        } else {
-          console.log("error submit!!");
-          return false;
+             addEvaluations(this.dynamicValidateForm).then(response => {
+              if (response.code === 200) {
+                this.msgSuccess("修改成功");
+                
+              } else {
+                this.msgError(response.msg);
+              }
+            });
         }
       });
     },
     removeDomain(item) {
-      var index = this.dynamicValidateForm.domains.indexOf(item);
+      var index = this.dynamicValidateForm.evaluations.indexOf(item);
       if (index !== -1) {
-        this.dynamicValidateForm.domains.splice(index, 1);
+        this.dynamicValidateForm.evaluations.splice(index, 1);
       }
     },
     addDomain() {
-      this.dynamicValidateForm.domains.push({
-        value: "",
+      this.dynamicValidateForm.evaluations.push({
         ownerId: "",
         result: "",
         reason: ""

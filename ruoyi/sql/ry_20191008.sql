@@ -732,3 +732,14 @@ CREATE TABLE `sys_user_leader` (
   `user_id` bigint(11) DEFAULT NULL COMMENT '用户ID',
   `leader_id` bigint(11) DEFAULT NULL COMMENT '上级领导用户ID'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户与领导关联表';
+
+drop table if exists performance_normal_task;
+CREATE TABLE `performance_normal_task` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '任务ID',
+  `type` varchar(11) DEFAULT NULL COMMENT '评审类型',
+  `date` datetime DEFAULT NULL COMMENT '考核时间点',
+  `owner_id` bigint(20) DEFAULT NULL COMMENT '责任人ID',
+  `result` varchar(11) DEFAULT NULL COMMENT '评审结果',
+  `reason` varchar(500) DEFAULT NULL COMMENT '评审理由',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=100 DEFAULT CHARSET=utf8 COMMENT='日常审批表';
