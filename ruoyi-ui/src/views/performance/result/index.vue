@@ -42,14 +42,14 @@
         </template>
       </el-table-column>
     </el-table>
-
+<!-- 
     <pagination
       v-show="total>0"
       :total="total"
       :page.sync="queryParams.pageNum"
       :limit.sync="queryParams.pageSize"
       @pagination="getList"
-    />
+    /> -->
 
    <el-dialog title="评判详细界面" :visible.sync="open" width="700px">
       <el-form ref="form" :model="form" label-width="100px" size="mini">
@@ -121,8 +121,8 @@ export default {
      
       // 查询参数
       queryParams: {
-        pageNum: 1,
-        pageSize: 10,
+        // pageNum: 1,
+        // pageSize: 10,
         ownerId: undefined,
         applicationDate: undefined
       },
@@ -131,6 +131,7 @@ export default {
     };
   },
   created() {
+    this.queryParams.applicationDate=this.parseTime(new Date());
     this.getList();
     this.getDicts("sys_notice_status").then(response => {
       this.statusOptions = response.data;
@@ -142,8 +143,8 @@ export default {
     getList() {
       this.loading = true;
       listResult(this.queryParams).then(response => {
-        this.resultList = response.rows;
-        this.total = response.total;
+        this.resultList = response.data;
+        // this.total = response.total;
         this.loading = false;
       });
     },
@@ -166,7 +167,7 @@ export default {
     },
     /** 搜索按钮操作 */
     handleQuery() {
-      this.queryParams.pageNum = 1;
+      // this.queryParams.pageNum = 1;
       this.getList();
     }
   }

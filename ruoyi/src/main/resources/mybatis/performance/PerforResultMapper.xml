@@ -45,7 +45,7 @@
         <![CDATA[   AND DATE_FORMAT(p.application_date, '%Y-%m') = DATE_FORMAT(#{applicationDate}, '%Y-%m')   ]]>
       </if>
     </where>
-    order by p.application_date desc , p.owner_id
+
   </select>
 
   <insert id="insertResult" parameterType="Long">
