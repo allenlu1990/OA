@@ -67,6 +67,9 @@
                {{ parseTime(form.applicationDate, '{y}年{m}月') }}
             </el-form-item>
           </el-col>
+          <el-col :span="16">
+            <el-form-item label="月度任务百分比：" label-width="140px">{{ form.applicationPercentage }}%</el-form-item>
+          </el-col>
           <el-col :span="24">
             <el-form-item label="任务内容：" > <b v-html = 'form.applicationContent'></b> </el-form-item>
           </el-col>

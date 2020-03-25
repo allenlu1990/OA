@@ -9,30 +9,59 @@ import com.ruoyi.framework.web.domain.BaseEntity;
 public class PerforApplication extends BaseEntity {
   private static final long serialVersionUID = 1L;
 
-  /** 申请ID */
+  /**
+   * 申请ID
+   */
   private Long applicationId;
 
-  /** 申请标题 */
+  /**
+   * 申请标题
+   */
   private String applicationTitle;
 
-  /** 被考核人 */
+  /**
+   * 被考核人
+   */
   private Long ownerId;
 
-  /** 被考核人名字 */
+  /**
+   * 被考核人名字
+   */
   private String ownerName;
 
-  /** 考核内容 */
+  /**
+   * 考核内容
+   */
   private String applicationContent;
 
-  /** 考核时间段 */
+  /**
+   * 考核时间段
+   */
   @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
   private Date applicationDate;
 
-  /** 申请状态（0正常 1关闭） */
+  /**
+   * 申请状态（0正常 1关闭）
+   */
   private String status;
 
-  /** 确认人 **/
+  /**
+   * 确认人
+   **/
   private List<Long> confirmerIds;
+
+  /**
+   * 占月度任务百分比
+   **/
+  private Integer applicationPercentage;
+
+  public Integer getApplicationPercentage() {
+    return applicationPercentage;
+  }
+
+  public void setApplicationPercentage(Integer applicationPercentage) {
+    this.applicationPercentage = applicationPercentage;
+  }
 
   public List<Long> getConfirmerIds() {
     return confirmerIds;

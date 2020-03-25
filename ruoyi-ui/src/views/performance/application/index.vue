@@ -112,23 +112,16 @@
               </el-radio-group>
             </el-form-item>
           </el-col>
-          <!-- <el-col :span="12">
-            <el-form-item label="被考核人员" prop="ownerId" label-width="100px">
-               <el-select v-model="form.ownerId" filterable placeholder="请选择" clearable size="small">
-                  <el-option
-                     v-for="item in userOptions"
-                     :key="item.userId"
-                     :label="item.userName"
-                     :value="item.userId"
-                  ></el-option>
-               </el-select>
-            </el-form-item>
-          </el-col> -->
           <el-col :span="12">
                <el-form-item label="计划月份" prop="applicationDate">
                   <el-date-picker value-format="yyyy-MM-dd HH:mm:ss" v-model="form.applicationDate" type="month" placeholder="选择月"></el-date-picker>
                </el-form-item>
          </el-col>
+         <el-col :span="12">
+            <el-form-item label="月度任务百分比" prop="applicationPercentage" label-width="120px">
+               <el-input-number v-model="form.applicationPercentage" :min="0" :max="100" size="small"></el-input-number>
+            </el-form-item>
+          </el-col>
          <el-col :span="12">
                <el-form-item v-if="form.applicationId == undefined" label="确认人">
                   <el-select v-model="form.confirmerIds" filterable multiple placeholder="请选择" clearable size="small">
@@ -246,7 +239,8 @@ export default {
         applicationDate: undefined,
         applicationContent: undefined,
         confirmerIds: [],
-        status: "0"
+        status: "0",
+        applicationPercentage: 0
       };
       this.resetForm("form");
     },
