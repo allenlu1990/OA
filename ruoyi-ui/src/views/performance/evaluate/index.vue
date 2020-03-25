@@ -75,7 +75,7 @@
           </el-col>
         </el-row>
         <el-form-item label="考评结果" prop="result" label-width="85px">
-          <el-select v-model="form.result" filterable placeholder="请选择" clearable size="small">
+          <el-select v-model="form.result" filterable placeholder="请选择" clearable size="small" @change="resetRemark">
             <el-option
                v-for="item in resultOptions"
                :key="item.dictLabel"
@@ -202,6 +202,9 @@ export default {
         remark: undefined
       };
       this.resetForm("form");
+    },
+    resetRemark(){
+      this.form.remark = undefined
     },
     /** 搜索按钮操作 */
     handleQuery() {

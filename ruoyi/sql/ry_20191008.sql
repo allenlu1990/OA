@@ -705,6 +705,7 @@ CREATE TABLE `performance_application` (
   `application_content` varchar(2000) DEFAULT NULL COMMENT '考核内容',
   `application_date` datetime DEFAULT NULL COMMENT '考核时间点',
   `status` char(1) DEFAULT NULL COMMENT '申请状态（0正常 1关闭）',
+  `application_percentage` int(5) DEFAULT NULL COMMENT '月度任务百分比',
   PRIMARY KEY (`application_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8 COMMENT='绩效申请表';
 

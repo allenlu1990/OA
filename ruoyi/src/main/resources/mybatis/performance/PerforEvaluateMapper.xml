@@ -63,13 +63,16 @@
   </insert>
 
   <update id="updatePerforApproveTask" parameterType="PerforApproveTask">
+    <!--update performance_approve_task-->
+    <!--<trim prefix="SET" suffixOverrides=",">-->
+      <!--&lt;!&ndash;<if test="approverId != null ">approver_id = #{approverId},</if>&ndash;&gt;-->
+      <!--&lt;!&ndash;<if test="applicationId != null ">application_id = #{applicationId},</if>&ndash;&gt;-->
+      <!--<if test="result != null  and result != ''">result = #{result},</if>-->
+      <!--<if test="remark != null  and remark != ''">remark = #{remark},</if>-->
+    <!--</trim>-->
+    <!--where id = #{id}-->
     update performance_approve_task
-    <trim prefix="SET" suffixOverrides=",">
-      <!--<if test="approverId != null ">approver_id = #{approverId},</if>-->
-      <!--<if test="applicationId != null ">application_id = #{applicationId},</if>-->
-      <if test="result != null  and result != ''">result = #{result},</if>
-      <if test="remark != null  and remark != ''">remark = #{remark},</if>
-    </trim>
+    set result = #{result},remark = #{remark}
     where id = #{id}
   </update>
 

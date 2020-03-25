@@ -43,7 +43,7 @@
       <el-col :span="12" >
        <el-form-item label="考评结果" prop="result" label-width="85px">
          <el-tooltip class="item" effect="dark" content="考评结果为A+或者B以下需要填写理由说明" placement="bottom-end">
-          <el-select v-model="evaluation.result" filterable placeholder="请选择" clearable size="small">
+          <el-select v-model="evaluation.result" filterable placeholder="请选择" clearable size="small" @change="resetRemark(evaluation)">
             <el-option
                v-for="item in resultOptions"
                :key="item.dictLabel"
@@ -54,7 +54,6 @@
          </el-tooltip>
          <el-button @click.prevent="removeDomain(evaluation)">删除</el-button>
         </el-form-item>
-        
     </el-col>
     <el-col :span="14" >
       <el-form-item v-if="['A+','B-','C+','C','C-','D','D+','D-'].includes(evaluation.result)" label="考评理由" label-width="85px">
@@ -107,7 +106,7 @@ export default {
           {
             ownerId: "",
             result: "",
-            reason: "",
+            reason: undefined,
           }
         ],
         type: undefined,
@@ -145,13 +144,16 @@ export default {
           {
             ownerId: "",
             result: "",
-            reason: "",
+            reason: undefined,
           }
         ],
         type: undefined,
         date: undefined
       };
       this.resetForm("dynamicValidateForm");
+    },
+    resetRemark(evaluation){
+      evaluation.reason = undefined
     },
     submitForm: function() {
       this.$refs["dynamicValidateForm"].validate(valid => {

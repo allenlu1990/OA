@@ -35,7 +35,7 @@ public class PerforResultServiceImpl implements IPerforResultService {
 
   private List<PerforResultParent> generateTotalResult(List<PerforResult> perforResults) {
     DateFormat df = new SimpleDateFormat("yyyy年MM月");
-    Map<String, List<PerforResult>> collect = perforResults.stream().collect(Collectors.groupingBy(o -> o.getOwnerName() + "_" + df.format(o.getApplicationDate())));
+    Map<String, List<PerforResult>> collect = perforResults.stream().collect(Collectors.groupingBy(o -> df.format(o.getApplicationDate()) + "_" + o.getOwnerName()));
     ArrayList<PerforResultParent> perforResultParents = new ArrayList<>();
     collect.forEach((k, results) -> {
       if (results.size() > 0) {
