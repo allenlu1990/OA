@@ -1,17 +1,6 @@
 <template>
   <div class="app-container">
     <el-form :inline="true" label-width="68px">
-      <!-- <el-form-item label="被考核人员" label-width="85px">
-        <el-select v-model="queryParams.ownerId" filterable placeholder="请选择" clearable size="small">
-          <el-option
-            v-for="item in userOptions"
-            :key="item.userId"
-            :label="item.userName"
-            :value="item.userId"
-          ></el-option>
-        </el-select>
-      </el-form-item> -->
-
       <el-form-item label="任务名称">
         <el-input
           v-model="queryParams.applicationTitle"
@@ -133,6 +122,18 @@
                   ></el-option>
                </el-select>
                </el-form-item>
+         </el-col>
+         <el-col :span="12">
+            <el-form-item label="责任人" label-width="85px" v-hasPermi="['performance:application:distribution']">
+            <el-select v-model="form.ownerId" filterable placeholder="请选择" clearable size="small">
+              <el-option
+                v-for="item in userOptions"
+                :key="item.userId"
+                :label="item.userName"
+                :value="item.userId"
+              ></el-option>
+            </el-select>
+          </el-form-item>
          </el-col>
           <el-col :span="24">
             <el-form-item label="任务内容">

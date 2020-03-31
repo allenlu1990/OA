@@ -57,7 +57,12 @@ public class PerforApplicationController extends BaseController {
   @PostMapping
   public AjaxResult add(@RequestBody PerforApplication application) {
     application.setCreateBy(SecurityUtils.getUsername());
-    application.setOwnerId(SecurityUtils.getLoginUser().getUser().getUserId());
+    /**
+     * 如果OwnerId为null 自己填写自己的任务
+     * **/
+    if(application.getOwnerId() ==null){
+      application.setOwnerId(SecurityUtils.getLoginUser().getUser().getUserId());
+    }
     return toAjax(applicationService.insertApplication(application));
   }
 

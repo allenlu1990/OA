@@ -81,7 +81,6 @@ public class PerforApplicationServiceImpl implements IPerforApplicationService {
     //TODO 后续升级改成存储过程
     //找上级
     List<Long> leaderId = perforEvaluateMapper.selectCorrelateIds(ownerId);
-    leaderId.removeAll(confirmerIds);
 
     if (leaderId.size() > 0) {
       //找领导的下级（找平级）
@@ -95,6 +94,7 @@ public class PerforApplicationServiceImpl implements IPerforApplicationService {
       leaderLeaderId.removeAll(confirmerIds);
       ranksIdMap.put(4, leaderLeaderId);
     }
+    leaderId.removeAll(confirmerIds);
     leaderId.addAll(confirmerIds);
     ranksIdMap.put(3, leaderId);
     //找下级
