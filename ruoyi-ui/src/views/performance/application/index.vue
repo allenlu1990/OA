@@ -124,7 +124,7 @@
                </el-form-item>
          </el-col>
          <el-col :span="12">
-            <el-form-item label="责任人" label-width="85px" v-hasPermi="['performance:application:distribution']">
+            <el-form-item label="责任人" v-if="form.applicationId == undefined" label-width="85px" v-hasPermi="['performance:application:distribution']">
             <el-select v-model="form.ownerId" filterable placeholder="请选择" clearable size="small">
               <el-option
                 v-for="item in userOptions"
