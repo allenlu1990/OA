@@ -23,26 +23,6 @@ public class PerforResultController extends BaseController {
   /**
    * 获取绩效结果列表
    */
-//  @PreAuthorize("@ss.hasPermi('performance:result:list')")
-//  @GetMapping("/list")
-//  public TableDataInfo list(PerforResult result) {
-//    startPage();
-//    /**
-//     *
-//     * 自己只能看到自己的结果 除了 考核系统管理员可以看到全部人的
-//     *
-//     * **/
-//    if (result.getOwnerId() == null) {
-//      result.setOwnerId(SecurityUtils.getLoginUser().getUser().getUserId());
-//      SecurityUtils.getLoginUser().getUser().getRoles().forEach(role -> {
-//        if (role.getRoleId() == 100 || role.getRoleId() == 1 || "evaluation".equals(role.getRoleKey())) {
-//          result.setOwnerId(null);
-//        }
-//      });
-//    }
-//
-//    return getDataTable(resultService.selectResultList(result));
-//  }
   @PreAuthorize("@ss.hasPermi('performance:result:list')")
   @GetMapping("/list")
   public AjaxResult list(PerforResult result) {
@@ -67,7 +47,7 @@ public class PerforResultController extends BaseController {
   /**
    * 根据绩效申请编号获取评判详细信息
    */
-  @PreAuthorize("@ss.hasPermi('performance:application:query')")
+  @PreAuthorize("@ss.hasPermi('performance:result:query')")
   @GetMapping(value = "/evaluations/{applicationId}")
   public AjaxResult getInfo(@PathVariable Long applicationId) {
     return AjaxResult.success(resultService.selectEvaluationsByApplicationId(applicationId));

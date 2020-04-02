@@ -21,6 +21,7 @@ import com.ruoyi.project.system.mapper.SysDictDataMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import static com.ruoyi.common.constant.Constants.DEFAULT_SCORE;
 import static com.ruoyi.common.utils.NumberUtils.changeNumberToLevel;
 
 /**
@@ -127,16 +128,15 @@ public class PerforEvaluateServiceImpl implements IPerforEvaluateService {
     AtomicInteger numberResult = new AtomicInteger();
     ranksRatioMap.forEach((rank, ratio) -> {
       if (ranksResultMap.containsKey(rank)) {
-        //TODO 没评论按满分算
         List<String> results = ranksResultMap.get(rank);
         results.removeAll(Collections.singleton(null));
         double average = results.stream().filter(result -> (!"".equals(result) || result != null))
             .map(NumberUtils::changeLevelToNumber)
-            .mapToDouble(v -> v).average().orElse(100);
-          numberResult.addAndGet(new Double(average * ranksRatioMap.get(rank)).intValue());
+            .mapToDouble(v -> v).average().orElse(DEFAULT_SCORE);
+        numberResult.addAndGet(new Double(average * ranksRatioMap.get(rank)).intValue());
       } else {
         //没有的级别就按100算
-        numberResult.addAndGet(new Double(ranksRatioMap.get(rank) * 100).intValue());
+        numberResult.addAndGet(new Double(ranksRatioMap.get(rank) * DEFAULT_SCORE).intValue());
       }
     });
 

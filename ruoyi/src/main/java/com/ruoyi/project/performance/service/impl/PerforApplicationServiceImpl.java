@@ -15,6 +15,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import static com.ruoyi.common.constant.Constants.LEADER_LEADER_RANK;
+import static com.ruoyi.common.constant.Constants.LEADER_RANK;
+import static com.ruoyi.common.constant.Constants.LEADER_SUBORDINATES_RANK;
+import static com.ruoyi.common.constant.Constants.SUBORDINATES_RANK;
+
 @Service
 public class PerforApplicationServiceImpl implements IPerforApplicationService {
 
@@ -88,19 +93,19 @@ public class PerforApplicationServiceImpl implements IPerforApplicationService {
       leaderSubordinatesId.removeAll(confirmerIds);
       //去掉自己
       leaderSubordinatesId.remove(ownerId);
-      ranksIdMap.put(2, leaderSubordinatesId);
+      ranksIdMap.put(LEADER_SUBORDINATES_RANK, leaderSubordinatesId);
       //找上上级
       List<Long> leaderLeaderId = perforEvaluateMapper.selectCorrelateIds(leaderId.get(0));
       leaderLeaderId.removeAll(confirmerIds);
-      ranksIdMap.put(4, leaderLeaderId);
+      ranksIdMap.put(LEADER_LEADER_RANK, leaderLeaderId);
     }
     leaderId.removeAll(confirmerIds);
     leaderId.addAll(confirmerIds);
-    ranksIdMap.put(3, leaderId);
+    ranksIdMap.put(LEADER_RANK, leaderId);
     //找下级
     List<Long> subordinatesId = perforEvaluateMapper.selectReverseCorrelateIds(ownerId);
     subordinatesId.removeAll(confirmerIds);
-    ranksIdMap.put(1, subordinatesId);
+    ranksIdMap.put(SUBORDINATES_RANK, subordinatesId);
 
     ArrayList<PerforApproveTask> perforApproveTasks = new ArrayList<>();
     ranksIdMap.forEach((rank, v) -> {

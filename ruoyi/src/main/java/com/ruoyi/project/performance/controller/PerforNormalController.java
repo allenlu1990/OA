@@ -29,7 +29,7 @@ public class PerforNormalController extends BaseController {
   /**
    * 获取绩效申请列表
    */
-  @PreAuthorize("@ss.hasPermi('performance:application:list')")
+  @PreAuthorize("@ss.hasPermi('performance:normal:list')")
   @GetMapping(value = "/{type}/{date}")
   public AjaxResult list(@PathVariable String type, @PathVariable Date date) {
     return AjaxResult.success(perforNormalService.selectPerforNormalTasks(type,date));
@@ -38,7 +38,7 @@ public class PerforNormalController extends BaseController {
   /**
    * 添加申请
    */
-  @PreAuthorize("@ss.hasPermi('performance:application:add')")
+  @PreAuthorize("@ss.hasPermi('performance:normal:list')")
   @Log(title = "日常考核", businessType = BusinessType.INSERT)
   @PostMapping
   public AjaxResult add(@RequestBody PerforNormal normal) {
