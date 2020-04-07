@@ -17,9 +17,12 @@
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
       </el-form-item>
+      <el-form-item>
+        <el-button type="success" icon="el-icon-download" size="mini" @click="downloadResult">下载</el-button>
+      </el-form-item>
     </el-form>
 
-    <el-table v-loading="loading" :data="resultList" row-key="applicationTitle" border :tree-props="{children: 'children', hasChildren: 'hasChildren'}">
+    <el-table id="resultTable" v-loading="loading" :data="resultList" row-key="applicationTitle" border :tree-props="{children: 'children', hasChildren: 'hasChildren'}">
       <!-- <el-table-column label="序号" align="center" width="50" /> -->
       <el-table-column label="任务名称" align="center" prop="applicationTitle" :show-overflow-tooltip="true"/>
       <el-table-column label="责任人" align="center" prop="ownerName" />
@@ -99,6 +102,8 @@
 import { listResult,getResultEvaluations} from "@/api/performance/result";
 import { listUser } from "@/api/system/user";
 import Editor from "@/components/Editor";
+import FileSaver from "file-saver";
+import XLSX from "xlsx";
 
 export default {
   components: {
@@ -169,7 +174,19 @@ export default {
     handleQuery() {
       // this.queryParams.pageNum = 1;
       this.getList();
-    }
+    },
+    downloadResult() {
+        let wb = XLSX.utils.table_to_book(document.querySelector('#resultTable'));   // 这里就是表格
+        let wbout = XLSX.write(wb, { bookType: 'xlsx', bookSST: true, type: 'array' });
+        try {
+          FileSaver.saveAs(new Blob([wbout], { type: 'application/octet-stream' }), this.parseTime(this.queryParams.applicationDate, '{y}年{m}月')+'结果.xlsx');  
+        } catch (e)
+        {
+          if (typeof console !== 'undefined')
+            console.log(e, wbout)
+        }
+        return wbout
+      }
   }
 };
 </script>
